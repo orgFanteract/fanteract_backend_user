@@ -1,4 +1,4 @@
-package org.fanteract.config
+package org.fanteract_user.config
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.servers.Server
@@ -11,8 +11,7 @@ import org.springframework.context.annotation.Configuration
 
 @OpenAPIDefinition(
     servers = [
-        Server(url = "http://localhost:8080", description = "로컬 서버"),
-        Server(url = "http://fanteract-alb-783000774.ap-northeast-2.elb.amazonaws.com", description = "외부 서버")
+        Server(url = "http://localhost:8081", description = "로컬 서버"),
     ]
 )
 @Configuration

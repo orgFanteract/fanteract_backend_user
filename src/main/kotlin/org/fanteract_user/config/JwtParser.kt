@@ -1,4 +1,4 @@
-package org.fanteract.config
+package org.fanteract_user.config
 
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys

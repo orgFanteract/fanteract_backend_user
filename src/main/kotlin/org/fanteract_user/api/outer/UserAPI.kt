@@ -1,15 +1,10 @@
-package org.fanteract_user.api
+package org.fanteract_user.api.outer
 
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.servlet.http.HttpServletRequest
-import org.fanteract.config.JwtParser
-import org.fanteract.dto.*
+import org.fanteract_user.config.JwtParser
 import org.fanteract_user.annotation.LoginRequired
-import org.fanteract_user.dto.ReadMyPageResponse
-import org.fanteract_user.dto.ReadRestrictedBoardListResponse
-import org.fanteract_user.dto.ReadRestrictedChatListResponse
-import org.fanteract_user.dto.ReadRestrictedCommentListResponse
-import org.fanteract_user.dto.UserSignInResponseDto
+import org.fanteract_user.dto.outer.*
 import org.fanteract_user.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,9 +22,9 @@ class UserAPI(
     @Operation(summary = "로그인")
     @PostMapping("/sign-in")
     fun signIn(
-        @RequestBody userSignInRequestDto: UserSignInRequestDto
-    ): ResponseEntity<UserSignInResponseDto>{
-        val response = userService.signIn(userSignInRequestDto)
+        @RequestBody readUserSignInOuterRequest: ReadUserSignInOuterRequest
+    ): ResponseEntity<ReadUserSignInOuterResponse>{
+        val response = userService.signIn(readUserSignInOuterRequest)
 
         return ResponseEntity.ok(response)
     }
@@ -37,9 +32,9 @@ class UserAPI(
     @Operation(summary = "회원 가입")
     @PostMapping("/sign-up")
     fun signUpWithCredential(
-        @RequestBody userSignUpRequestDto: UserSignUpRequestDto,
+        @RequestBody createUserSignUpOuterRequest: CreateUserSignUpOuterRequest,
     ): ResponseEntity<Void> {
-        userService.signUp(userSignUpRequestDto)
+        userService.signUp(createUserSignUpOuterRequest)
 
         return ResponseEntity.ok().build()
     }
@@ -49,7 +44,7 @@ class UserAPI(
     @GetMapping("/my-page")
     fun readMyPage(
         request: HttpServletRequest
-    ): ResponseEntity<ReadMyPageResponse>{
+    ): ResponseEntity<ReadUserMyPageOuterResponse>{
         val userId = JwtParser.extractKey(request, "userId")
         val response = userService.readMyPage(userId)
 
@@ -63,7 +58,7 @@ class UserAPI(
         request: HttpServletRequest,
         @RequestParam("page", defaultValue = "0") page: Int,
         @RequestParam("size", defaultValue = "10") size: Int,
-    ): ResponseEntity<ReadRestrictedBoardListResponse> {
+    ): ResponseEntity<ReadRestrictedBoardPageOuterResponse> {
         val userId = JwtParser.extractKey(request, "userId")
         val response = userService.readRestrictedBoard(userId, page, size)
 
@@ -77,7 +72,7 @@ class UserAPI(
         request: HttpServletRequest,
         @RequestParam("page", defaultValue = "0") page: Int,
         @RequestParam("size", defaultValue = "10") size: Int,
-    ): ResponseEntity<ReadRestrictedCommentListResponse> {
+    ): ResponseEntity<ReadRestrictedCommentPageOuterResponse> {
         val userId = JwtParser.extractKey(request, "userId")
         val response = userService.readRestrictedComment(userId, page, size)
 
@@ -91,7 +86,7 @@ class UserAPI(
         request: HttpServletRequest,
         @RequestParam("page", defaultValue = "0") page: Int,
         @RequestParam("size", defaultValue = "10") size: Int,
-    ): ResponseEntity<ReadRestrictedChatListResponse> {
+    ): ResponseEntity<ReadRestrictedChatPageOuterResponse> {
         val userId = JwtParser.extractKey(request, "userId")
         val response = userService.readRestrictedChat(userId, page, size)
 

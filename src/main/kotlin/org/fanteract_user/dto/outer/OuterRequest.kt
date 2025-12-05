@@ -1,11 +1,11 @@
-package org.fanteract.dto
+package org.fanteract_user.dto.outer
 
-data class UserSignInRequestDto(
+data class ReadUserSignInOuterRequest(
     val email: String,
     val password: String,
 )
 
-data class UserSignUpRequestDto(
+data class CreateUserSignUpOuterRequest(
     val email: String,
     val password: String,
     val name: String,
